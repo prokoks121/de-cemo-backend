@@ -1,0 +1,14 @@
+version: '3'
+services:
+  db:
+    image: 'postgres:latest'
+    env_file:
+      - .env
+    ports:
+      - ${DATASOURCE_PORT:-54320}:5432
+    environment:
+      POSTGRES_USER: ${DATASOURCE_USERNAME:-cdruser}
+      POSTGRES_PASSWORD: ${DATASOURCE_PASSWORD:-cdrpass}
+      POSTGRES_DB: ${DATASOURCE_DB:-cdrdb}
+    volumes:
+      - ./db-data:/var/lib/postgresql/data

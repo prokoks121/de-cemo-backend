@@ -1,8 +1,12 @@
 package decemo.com.bardatastore.entity
 
+import com.vladmihalcea.hibernate.type.json.JsonBinaryType
+import org.hibernate.annotations.Type
+import org.hibernate.annotations.TypeDef
 import javax.persistence.*
 
 @Entity
+@TypeDef(name = "jsonb", typeClass = JsonBinaryType::class)
 class Bar(
     @Id
     @GeneratedValue
@@ -12,17 +16,19 @@ class Bar(
     @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "services_id")
     var services: MutableList<Service>? = mutableListOf(),
-    @Column(columnDefinition = "json")
-    var workTime: String,
+    @Type(type = "jsonb")
+    @Column(columnDefinition = "jsonb")
+    var workTime: List<String>,
     var latitude: String,
     var longitude: String,
     var phoneNumber: String,
     var mainPictureUrl: String,
-    @Column(columnDefinition = "json")
-    var galleryPictureUrls: String,
+    @Type(type = "jsonb")
+    @Column(columnDefinition = "jsonb")
+    var galleryPictureUrls: List<String>,
     @ManyToOne(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "bar_type_id")
     var barType: BarType,
     @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
-    var events:MutableList<Event> = mutableListOf()
+    var events: MutableList<Event> = mutableListOf()
 )

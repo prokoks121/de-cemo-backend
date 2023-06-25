@@ -7,6 +7,6 @@ import java.util.Optional
 
 @Repository
 interface ServicesRepository : JpaRepository<Service, Long> {
-    fun findAllByNameIn(serviceNames: Set<String>): Set<Service>
+    fun findAllByNameIn(serviceNames: MutableList<String>): MutableList<Service>
     fun findServicesByName(serviceName:String): Optional<Service>
 }

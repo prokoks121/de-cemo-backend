@@ -1,22 +1,22 @@
 package decemo.com.barexplorer.controller
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import decemo.com.barexplorer.entity.Bar
-import decemo.com.barexplorer.entity.BarType
-import decemo.com.barexplorer.entity.Service
-import decemo.com.barexplorer.mapper.BarMapper
+import decemo.com.bardatastore.entity.Bar
+import decemo.com.bardatastore.entity.BarType
+import decemo.com.bardatastore.entity.Service
+import decemo.com.bardatastore.repository.BarRepository
+import decemo.com.bardatastore.repository.BarTypeRepository
+import decemo.com.bardatastore.repository.ServicesRepository
+import decemo.com.barexplorer.facade.BarFacade
 import decemo.com.barexplorer.model.BarDto
-import decemo.com.barexplorer.repository.BarRepository
-import decemo.com.barexplorer.repository.BarTypeRepository
-import decemo.com.barexplorer.repository.ServicesRepository
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.server.ResponseStatusException
 
 @RestController
 @RequestMapping("/api/v1")
 class BarExplorerController {
-
     @Autowired
     lateinit var barRepository: BarRepository
 
@@ -27,30 +27,40 @@ class BarExplorerController {
     lateinit var servicesRepository: ServicesRepository
 
     @Autowired
-    lateinit var barMapper: BarMapper
+    lateinit var facade: BarFacade
 
     @GetMapping("/bars")
-    fun getFilteredBaryByType(@RequestParam(required = false) bartTypes: List<Long>?): List<BarDto> {
+    fun getBar(@RequestParam(required = false) bartTypes: MutableList<Long>?): List<BarDto> {
         if (bartTypes == null) {
-            val bars = barRepository.findAll()
-            return barMapper.mapBarsToDto(bars)
+            return facade.getAllBars()
         }
-
-        val barTypeList = barTypeRepository.findAllByIdIn(bartTypes)
-        val bars = barRepository.findAllByTypeIn(barTypeList)
-        return barMapper.mapBarsToDto(bars)
+        return facade.getAllBarsByType(bartTypes)
     }
 
     @GetMapping("/bar/{id}")
     fun getBar(@PathVariable id: Long): ResponseEntity<BarDto> {
-        val bar = barRepository.findById(id)
-        return if (bar.isPresent) {
-            ResponseEntity.ok(barMapper.mapBarToDto(bar.get()))
+        val bar = facade.getBarById(id)
+        return if (bar != null) {
+            ResponseEntity.ok(bar)
         } else {
-            ResponseEntity.notFound().build()
+            throw ResponseStatusException(HttpStatus.NOT_FOUND)
         }
     }
 
+    @GetMapping("/bar/find/{name}")
+    fun findBarByName(@PathVariable name: String): MutableList<BarDto> {
+        return facade.getAllBarsByPartialName(name)
+    }
+
+    @PostMapping("/bar/add")
+    fun createBar(@RequestBody barDto: BarDto): ResponseEntity<BarDto> {
+        facade.addBar(barDto).onSuccess {
+            return ResponseEntity.ok(it)
+        }.onFailure {
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST, it.message, it.cause)
+        }
+        throw ResponseStatusException(HttpStatus.BAD_REQUEST)
+    }
 
     @PostMapping("/add")
     fun add(@RequestBody models: List<ModelToAdd>) {
@@ -69,9 +79,9 @@ class BarExplorerController {
                 longitude = model.long,
                 phoneNumber = model.telefon,
                 mainPictureUrl = model.slika,
-                galleryPictureUrls = jacksonObjectMapper().writeValueAsString(model.galerija),
-                type = barType,
-                workTime = jacksonObjectMapper().writeValueAsString(model.radno),
+                galleryPictureUrls = model.galerija,
+                barType = barType,
+                workTime = model.radno,
                 services = services
             )
             barRepository.save(bar)

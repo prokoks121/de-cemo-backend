@@ -1,4 +1,6 @@
-package decemo.com.bardatastore.model
+package decemo.com.events.explorer.model.dto
+
+import decemo.com.bardatastore.entity.Event
 
 data class BarDto(
     var id: Long,
@@ -12,5 +14,5 @@ data class BarDto(
     var mainPictureUrl: String,
     var galleryPictureUrls: String,
     var barType: BarTypeDto,
-    var events: EventDto
+    var events: MutableList<Event> = mutableListOf()
 )

@@ -7,5 +7,7 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface BarRepository : JpaRepository<Bar, Long> {
-    fun findAllByTypeIn(barTypes: List<BarType>): List<Bar>
+    fun findAllByBarTypeIn(barTypes: MutableList<BarType>): MutableList<Bar>
+    fun findAllByBarType_IdIn(barTypes: MutableList<BarType>): MutableList<Bar>
+    fun findAllByNameContaining(partialName: String): MutableList<Bar>
 }

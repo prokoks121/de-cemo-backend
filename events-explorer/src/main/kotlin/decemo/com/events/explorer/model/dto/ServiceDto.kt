@@ -1,4 +1,4 @@
-package decemo.com.bardatastore.model
+package decemo.com.events.explorer.model.dto
 
 class ServiceDto(
     var id: Long,

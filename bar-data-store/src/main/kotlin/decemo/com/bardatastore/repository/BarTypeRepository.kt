@@ -10,5 +10,5 @@ interface BarTypeRepository : JpaRepository<BarType, Long> {
 
     fun findBarTypeByType(type: String): Optional<BarType>
 
-    fun findAllByIdIn(ids: List<Long>): List<BarType>
+    fun findAllByIdIn(ids: MutableList<Long>): MutableList<BarType>
 }

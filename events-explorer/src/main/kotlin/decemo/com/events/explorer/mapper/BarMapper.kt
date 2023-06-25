@@ -1,7 +1,7 @@
-package decemo.com.barexplorer.mapper
+package decemo.com.events.explorer.mapper
 
 import decemo.com.bardatastore.entity.Bar
-import decemo.com.barexplorer.model.BarDto
+import decemo.com.events.explorer.model.dto.BarDto
 import org.mapstruct.Mapper
 
 @Mapper(componentModel = "spring")
