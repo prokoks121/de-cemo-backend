@@ -1,10 +1,11 @@
 package decemo.com.events.explorer.model.dto
 
-import decemo.com.bardatastore.entity.Bar
+import java.time.ZonedDateTime
 
-class EventDto(
+data class EventDto(
     var id: Long = 0,
     var name: String,
     var imageUrl: String,
-    var bar: Bar
+    var bar: BarDto,
+    var createdAt: ZonedDateTime
 )

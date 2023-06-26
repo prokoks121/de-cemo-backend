@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 import org.springframework.web.server.ResponseStatusException
+import java.time.ZonedDateTime
 
 @Component
 class EventFacade {
@@ -47,7 +48,7 @@ class EventFacade {
         if (bar.isEmpty) {
             return Result.failure(ResponseStatusException(HttpStatus.NOT_FOUND, "Bar with id: ${eventRequest.barId} doesn't exists."))
         }
-        val event = Event(name = eventRequest.name, imageUrl = eventRequest.imageUrl, bar = bar.get())
+        val event = Event(name = eventRequest.name, imageUrl = eventRequest.imageUrl, bar = bar.get(), createdAt = ZonedDateTime.now())
         return Result.success(eventMapper.mapToDto(eventRepository.save(event)))
     }
 

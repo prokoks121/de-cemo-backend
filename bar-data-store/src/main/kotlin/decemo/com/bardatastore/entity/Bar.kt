@@ -19,8 +19,8 @@ class Bar(
     @Type(type = "jsonb")
     @Column(columnDefinition = "jsonb")
     var workTime: List<String>,
-    var latitude: String,
-    var longitude: String,
+    var latitude: Double,
+    var longitude: Double,
     var phoneNumber: String,
     var mainPictureUrl: String,
     @Type(type = "jsonb")

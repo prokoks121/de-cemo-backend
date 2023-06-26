@@ -28,6 +28,7 @@ class BarFacade {
 
     @Autowired
     lateinit var barTypeMapper: BarTypeMapper
+
     fun getAllBars(): List<BarDto> {
         return barMapper.mapToDto(barRepository.findAll())
     }
@@ -56,8 +57,8 @@ class BarFacade {
             val bar = Bar(
                 name = barDto.name,
                 address = barDto.address,
-                latitude = barDto.latitude,
-                longitude = barDto.longitude,
+                latitude = barDto.latitude.toDouble(),
+                longitude = barDto.longitude.toDouble(),
                 phoneNumber = barDto.phoneNumber,
                 mainPictureUrl = barDto.mainPictureUrl,
                 galleryPictureUrls = barDto.galleryPictureUrls,

@@ -8,6 +8,7 @@ import decemo.com.bardatastore.repository.BarTypeRepository
 import decemo.com.bardatastore.repository.ServicesRepository
 import decemo.com.barexplorer.facade.BarFacade
 import decemo.com.barexplorer.model.BarDto
+import decemo.com.barexplorer.model.BarTypeDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -75,8 +76,8 @@ class BarExplorerController {
             val bar = Bar(
                 name = model.ime,
                 address = model.adresa,
-                latitude = model.lat,
-                longitude = model.long,
+                latitude = model.lat.toDouble(),
+                longitude = model.long.toDouble(),
                 phoneNumber = model.telefon,
                 mainPictureUrl = model.slika,
                 galleryPictureUrls = model.galerija,
