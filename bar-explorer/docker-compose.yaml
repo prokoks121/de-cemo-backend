@@ -1,0 +1,6 @@
+version: "3"
+services:
+  bar-explorer:
+    build: .
+    container_name: bar-explorer
+    image: bar-explorer:latest

@@ -1,12 +1,17 @@
+server:
+  servlet:
+    context-path: "/api/v1/explorer"
+
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:54320/cdrdb
+    url: jdbc:postgresql://host.docker.internal:54320/cdrdb
+#    url: jdbc:postgresql://localhost:54320/cdrdb
     username: cdruser
     password: cdrpass
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+#    show-sql: true
     properties:
       hibernate:
         format_sql: true

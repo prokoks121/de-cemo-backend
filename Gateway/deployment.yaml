@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: decemo-gateway
+spec:
+  selector:
+    matchLabels:
+      app: decemo-gateway
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: decemo-gateway
+    spec:
+      containers:
+        - name: decemo-gateway
+          image: decemo-gateway
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080

@@ -11,6 +11,7 @@ class BarType(
     @GeneratedValue
     var id: Long = 0,
     var type: String,
+    var iconUrl: String,
     @OneToMany(mappedBy = "barType")
     var bars: MutableList<Bar> = mutableListOf()
 )

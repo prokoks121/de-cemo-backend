@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bar-explorer
+spec:
+  selector:
+    matchLabels:
+      app: bar-explorer
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: bar-explorer
+    spec:
+      containers:
+        - name: bar-explorer
+          image: bar-explorer
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080

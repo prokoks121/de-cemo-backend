@@ -1,4 +1,4 @@
-package decemo.com.barexplorer.controller
+package decemo.com.barexplorer.controller.bartype
 
 import decemo.com.barexplorer.facade.BarTypeFacade
 import decemo.com.barexplorer.model.BarTypeDto
@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/api/v1")
 class BarTypeExplorerController {
 
     @Autowired

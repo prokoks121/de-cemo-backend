@@ -1,4 +1,4 @@
-package decemo.com.barexplorer.controller
+package decemo.com.barexplorer.controller.bar
 
 import decemo.com.bardatastore.entity.Bar
 import decemo.com.bardatastore.entity.BarType
@@ -8,7 +8,6 @@ import decemo.com.bardatastore.repository.BarTypeRepository
 import decemo.com.bardatastore.repository.ServicesRepository
 import decemo.com.barexplorer.facade.BarFacade
 import decemo.com.barexplorer.model.BarDto
-import decemo.com.barexplorer.model.BarTypeDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 
 @RestController
-@RequestMapping("/api/v1")
 class BarExplorerController {
     @Autowired
     lateinit var barRepository: BarRepository
@@ -67,7 +65,7 @@ class BarExplorerController {
     fun add(@RequestBody models: List<ModelToAdd>) {
 
         models.forEach { model ->
-            var barType = barTypeRepository.findBarTypeByType(model.vrsta).orElse(BarType(bars = arrayListOf(), type = model.vrsta))
+            var barType = barTypeRepository.findBarTypeByType(model.vrsta).orElse(BarType(bars = arrayListOf(), type = model.vrsta, iconUrl = ""))
             var services = arrayListOf<Service>()
             model.usluge.forEach {
                 services.add(servicesRepository.findServicesByName(it).orElse(Service(name = it, iconUrl = "", bars = mutableListOf())))

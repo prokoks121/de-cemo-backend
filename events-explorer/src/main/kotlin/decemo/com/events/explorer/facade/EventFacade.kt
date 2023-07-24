@@ -6,8 +6,10 @@ import decemo.com.bardatastore.repository.BarRepository
 import decemo.com.bardatastore.repository.BarTypeRepository
 import decemo.com.bardatastore.repository.EventRepository
 import decemo.com.bardatastore.repository.ServicesRepository
+import decemo.com.events.explorer.mapper.BarMapper
 import decemo.com.events.explorer.mapper.EventMapper
 import decemo.com.events.explorer.model.EventRequest
+import decemo.com.events.explorer.model.dto.BarEvent
 import decemo.com.events.explorer.model.dto.EventDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -33,9 +35,13 @@ class EventFacade {
     @Autowired
     private lateinit var eventMapper: EventMapper
 
-    fun getAllEvents(): MutableList<EventDto> {
-        val events = eventRepository.findAll()
-        return eventMapper.mapToDto(events)
+    @Autowired
+    private lateinit var barMapper: BarMapper
+
+    fun getAllEvents(): MutableList<BarEvent> {
+//        val events = eventRepository.findAll()
+        val barEvents = barRepository.findAllByEventsIsNotEmpty()
+        return barMapper.mapToBarEvents(barEvents)
     }
 
     fun getAllEventsByBar(barId: Long): MutableList<EventDto> {

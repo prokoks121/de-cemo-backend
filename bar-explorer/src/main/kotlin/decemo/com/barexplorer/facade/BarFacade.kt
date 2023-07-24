@@ -50,7 +50,7 @@ class BarFacade {
 
     fun addBar(barDto: BarDto): Result<BarDto> {
         return runCatching {
-            val barType = barTypeRepository.findBarTypeByType(barDto.barType.type).orElse(BarType(bars = arrayListOf(), type = barDto.barType.type))
+            val barType = barTypeRepository.findBarTypeByType(barDto.barType.type).orElse(BarType(bars = arrayListOf(), type = barDto.barType.type, iconUrl = ""))
             val services = barDto.services.map {
                 servicesRepository.findServicesByName(it.name).orElse(Service(name = it.name, iconUrl = "", bars = mutableListOf()))
             }
@@ -71,7 +71,7 @@ class BarFacade {
     }
 
     fun getAllBarsByPartialName(partialName: String): MutableList<BarDto> {
-        val bars = barRepository.findAllByNameContaining(partialName)
+        val bars = barRepository.findAllByNameContainingIgnoreCase(partialName)
         return barMapper.mapToDto(bars)
     }
 }

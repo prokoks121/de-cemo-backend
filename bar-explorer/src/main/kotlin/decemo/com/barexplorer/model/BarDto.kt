@@ -12,5 +12,4 @@ data class BarDto(
     var mainPictureUrl: String,
     var galleryPictureUrls: List<String>,
     var barType: BarTypeDto,
-    var events: MutableList<EventDto> = mutableListOf()
 )
