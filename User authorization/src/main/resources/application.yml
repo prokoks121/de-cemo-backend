@@ -1,0 +1,13 @@
+server:
+  servlet:
+    context-path: "/api/v1/jwt"
+#  port: 8083
+
+decemo:
+  jwt:
+    token:
+      expired: 86400000
+      secret: RtaW4iLCJJc3N1ZXIiO
+    refresh-token:
+      expired: 86400000
+      secret: tZSI6IkphdmFJblVzZSIsI

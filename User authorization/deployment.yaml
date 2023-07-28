@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: decemo-authorization
+spec:
+  selector:
+    matchLabels:
+      app: decemo-authorization
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: decemo-authorization
+    spec:
+      containers:
+        - name: decemo-authorization
+          image: decemo-authorization
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080

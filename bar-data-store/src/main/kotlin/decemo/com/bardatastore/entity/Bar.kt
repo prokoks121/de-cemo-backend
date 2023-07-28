@@ -11,7 +11,7 @@ class Bar(
     @Id
     @GeneratedValue
     var id: Long = 0,
-    var name: String,
+    var ame: String,
     var address: String,
     @ManyToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL])
     @JoinColumn(name = "services_id")

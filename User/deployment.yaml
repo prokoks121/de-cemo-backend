@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: decemo-user
+spec:
+  selector:
+    matchLabels:
+      app: decemo-user
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: decemo-user
+    spec:
+      containers:
+        - name: decemo-user
+          image: decemo-user
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080

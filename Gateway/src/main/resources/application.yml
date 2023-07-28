@@ -8,3 +8,7 @@ spring:
           uri: http://bar-explorer-service:8080
           predicates:
             - Path=/api/v1/explorer/**
+        - id: decemo-user
+          uri: http://decemo-user-service:8080
+          predicates:
+            - Path=/api/v1/user/**

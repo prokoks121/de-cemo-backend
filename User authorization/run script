@@ -1,0 +1,10 @@
+kubectl config use-context docker-desktop
+
+
+mvn clean install
+docker-compose build
+kubectl create -f deployment.yaml
+kubectl expose deployment decemo-authorization --type=NodePort --name=decemo-authorization-service
+
+kubectl delete deployment decemo-authorization
+kubectl delete service decemo-authorization-service

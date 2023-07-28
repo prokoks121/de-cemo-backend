@@ -1,0 +1,6 @@
+version: "3"
+services:
+  bar-explorer:
+    build: .
+    container_name: decemo-user
+    image: decemo-user:latest

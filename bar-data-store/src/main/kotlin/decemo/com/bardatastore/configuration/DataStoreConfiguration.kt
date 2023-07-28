@@ -24,7 +24,7 @@ import javax.sql.DataSource
 //@ConditionalOnClass(DataSource::class)
 class DataStoreConfiguration {
 
-//    @Bean
+r//    @Bean
 //    @Primary
 //    @ConfigurationProperties("decemo.db")
 //    fun databaseDataSourceProperties(): DataSourceProperties {

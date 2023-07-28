@@ -1,0 +1,12 @@
+kubectl config use-context docker-desktop
+
+
+mvn clean install
+docker-compose build
+kubectl create -f deployment.yaml
+kubectl expose deployment decemo-user --type=NodePort --name=decemo-user-service
+
+
+
+kubectl delete deployment decemo-user
+kubectl delete service decemo-user-service

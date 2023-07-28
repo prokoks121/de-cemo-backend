@@ -1,0 +1,12 @@
+kubectl config use-context docker-desktop
+
+
+mvn clean install
+docker-compose build
+kubectl create -f deployment.yaml
+kubectl expose deployment decemo-gateway --type=NodePort --name=decemo-gateway-service
+
+
+kubectl delete deployment decemo-gateway
+kubectl delete service decemo-gateway-service
+
