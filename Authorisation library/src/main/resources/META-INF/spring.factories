@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=decemo.com.userauthorisation.configuration.JwtAuthorisationAutoConfiguration; decemo.com.userauthorisation.configuration.ClientConfiguration
