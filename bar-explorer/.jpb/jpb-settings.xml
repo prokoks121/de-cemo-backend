@@ -6,4 +6,13 @@
   <component name="JpaPluginProjectSettings">
     <option name="lastSelectedLanguage" value="Kotlin" />
   </component>
+  <component name="PersistenceUnitSettings">
+    <persistence-units>
+      <persistence-unit name="Default">
+        <packages>
+          <package value="decemo.com.barexplorer" />
+        </packages>
+      </persistence-unit>
+    </persistence-units>
+  </component>
 </project>

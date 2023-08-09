@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException
 
 @RestController
 class EventsController {
+
     @Autowired
     private lateinit var eventFacade: EventFacade
 

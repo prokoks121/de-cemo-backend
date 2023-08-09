@@ -3,12 +3,12 @@ package decemo.com.user.service
 import decemo.com.user.exception.WrongCredentialsException
 import decemo.com.user.model.entity.User
 import decemo.com.user.repository.UserRepository
-import decemo.com.user.toLibrary.client.JwtClient
-import decemo.com.user.toLibrary.model.JwtToken
+import decemo.com.userauthorisation.client.JwtClient
+import decemo.com.userauthorisation.model.JwtToken
 import org.springframework.stereotype.Service
 
 @Service
-class RegistrationService(val client: JwtClient, val userRepository: UserRepository) {
+class LoginService(val client: JwtClient, val userRepository: UserRepository) {
 
     fun registerNewClient(newUser: User): Result<JwtToken> {
         val user = userRepository.save(newUser)

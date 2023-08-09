@@ -3,18 +3,17 @@ package decemo.com.user.controller
 import decemo.com.user.mapper.mapTo
 import decemo.com.user.model.request.LoginRequestBody
 import decemo.com.user.model.request.UserRegistrationBody
-import decemo.com.user.service.RegistrationService
-import decemo.com.user.toLibrary.model.JwtToken
+import decemo.com.user.service.LoginService
+import decemo.com.userauthorisation.model.JwtToken
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ResponseStatusException
 
 @RestController
-class LoginController(val registrationService: RegistrationService) {
+class LoginController(val registrationService: LoginService) {
 
     @PostMapping("/login")
     fun loginUser(@RequestBody loginRequestBody: LoginRequestBody): ResponseEntity<JwtToken> {

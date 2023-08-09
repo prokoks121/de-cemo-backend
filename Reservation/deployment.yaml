@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: decemo-reservation
+spec:
+  selector:
+    matchLabels:
+      app: decemo-reservation
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: decemo-reservation
+    spec:
+      containers:
+        - name: decemo-reservation
+          image: decemo-reservation
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080

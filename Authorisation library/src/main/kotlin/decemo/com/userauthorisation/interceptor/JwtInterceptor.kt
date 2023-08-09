@@ -11,6 +11,7 @@ class JwtInterceptor(private val jwtClient: JwtClient) : HandlerInterceptor {
     companion object {
         const val AUTHORIZATION_HEADER = "Authorization"
         const val BEARER = "Bearer "
+        const val TOKEN_BODY = "tokenBody"
     }
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
@@ -19,7 +20,7 @@ class JwtInterceptor(private val jwtClient: JwtClient) : HandlerInterceptor {
             val token = oAuthToken.removePrefix(BEARER)
             val result = jwtClient.decode(token)
             result.onSuccess { tokenBody ->
-                request.setAttribute("tokenBody", tokenBody)
+                request.setAttribute(TOKEN_BODY, tokenBody)
             }.onFailure {
                 response.sendError(HttpStatus.UNAUTHORIZED.value(), it.message)
                 return false

@@ -1,0 +1,6 @@
+version: "3"
+services:
+  bar-explorer:
+    build: .
+    container_name: decemo-reservation
+    image: decemo-reservation:latest

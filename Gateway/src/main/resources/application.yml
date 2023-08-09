@@ -12,3 +12,7 @@ spring:
           uri: http://decemo-user-service:8080
           predicates:
             - Path=/api/v1/user/**
+        - id: decemo-reservation
+          uri: http://decemo-reservation-service:8080
+          predicates:
+            - Path=/api/v1/reservation/**

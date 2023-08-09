@@ -24,12 +24,6 @@ class EventFacade {
     private lateinit var barRepository: BarRepository
 
     @Autowired
-    private lateinit var barTypeRepository: BarTypeRepository
-
-    @Autowired
-    private lateinit var servicesRepository: ServicesRepository
-
-    @Autowired
     private lateinit var eventRepository: EventRepository
 
     @Autowired
@@ -39,7 +33,6 @@ class EventFacade {
     private lateinit var barMapper: BarMapper
 
     fun getAllEvents(): MutableList<BarEvent> {
-//        val events = eventRepository.findAll()
         val barEvents = barRepository.findAllByEventsIsNotEmpty()
         return barMapper.mapToBarEvents(barEvents)
     }
@@ -50,14 +43,19 @@ class EventFacade {
     }
 
     fun addNewEvent(eventRequest: EventRequest): Result<EventDto> {
-        val bar = barRepository.findById(eventRequest.barId)
-        if (bar.isEmpty) {
-            return Result.failure(ResponseStatusException(HttpStatus.NOT_FOUND, "Bar with id: ${eventRequest.barId} doesn't exists."))
+        runCatching {
+            val bar = barRepository.findById(eventRequest.barId)
+            if (bar.isEmpty) {
+                return Result.failure(ResponseStatusException(HttpStatus.NOT_FOUND, "Bar with id: ${eventRequest.barId} doesn't exists."))
+            }
+            val event = Event(name = eventRequest.name, imageUrl = eventRequest.imageUrl, bar = bar.get(), createdAt = ZonedDateTime.now())
+            bar.get().events.add(event)
+            barRepository.save(bar.get())
+            return Result.success(eventMapper.mapToDto(eventRepository.save(event)))
+        }.onFailure {
+            return Result.failure(it)
         }
-        val event = Event(name = eventRequest.name, imageUrl = eventRequest.imageUrl, bar = bar.get(), createdAt = ZonedDateTime.now())
-        bar.get().events.add(event)
-        barRepository.save(bar.get())
-        return Result.success(eventMapper.mapToDto(eventRepository.save(event)))
+        return Result.failure(Exception())
     }
 
     fun addNewEvent(eventRequest: List<EventRequest>): Result<List<EventDto>> {

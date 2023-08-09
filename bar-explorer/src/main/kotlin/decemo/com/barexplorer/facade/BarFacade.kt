@@ -26,8 +26,6 @@ class BarFacade {
     @Autowired
     lateinit var barMapper: BarMapper
 
-    @Autowired
-    lateinit var barTypeMapper: BarTypeMapper
 
     fun getAllBars(): List<BarDto> {
         return barMapper.mapToDto(barRepository.findAll())
@@ -50,7 +48,8 @@ class BarFacade {
 
     fun addBar(barDto: BarDto): Result<BarDto> {
         return runCatching {
-            val barType = barTypeRepository.findBarTypeByType(barDto.barType.type).orElse(BarType(bars = arrayListOf(), type = barDto.barType.type, iconUrl = ""))
+            val barType =
+                barTypeRepository.findBarTypeByType(barDto.barType.type).orElse(BarType(bars = arrayListOf(), type = barDto.barType.type, iconUrl = ""))
             val services = barDto.services.map {
                 servicesRepository.findServicesByName(it.name).orElse(Service(name = it.name, iconUrl = "", bars = mutableListOf()))
             }

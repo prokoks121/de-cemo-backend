@@ -1,11 +1,5 @@
 package decemo.com.barexplorer.controller.bar
 
-import decemo.com.bardatastore.entity.Bar
-import decemo.com.bardatastore.entity.BarType
-import decemo.com.bardatastore.entity.Service
-import decemo.com.bardatastore.repository.BarRepository
-import decemo.com.bardatastore.repository.BarTypeRepository
-import decemo.com.bardatastore.repository.ServicesRepository
 import decemo.com.barexplorer.facade.BarFacade
 import decemo.com.barexplorer.model.BarDto
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,14 +10,6 @@ import org.springframework.web.server.ResponseStatusException
 
 @RestController
 class BarExplorerController {
-    @Autowired
-    lateinit var barRepository: BarRepository
-
-    @Autowired
-    lateinit var barTypeRepository: BarTypeRepository
-
-    @Autowired
-    lateinit var servicesRepository: ServicesRepository
 
     @Autowired
     lateinit var facade: BarFacade
@@ -60,43 +46,4 @@ class BarExplorerController {
         }
         throw ResponseStatusException(HttpStatus.BAD_REQUEST)
     }
-
-    @PostMapping("/add")
-    fun add(@RequestBody models: List<ModelToAdd>) {
-
-        models.forEach { model ->
-            var barType = barTypeRepository.findBarTypeByType(model.vrsta).orElse(BarType(bars = arrayListOf(), type = model.vrsta, iconUrl = ""))
-            var services = arrayListOf<Service>()
-            model.usluge.forEach {
-                services.add(servicesRepository.findServicesByName(it).orElse(Service(name = it, iconUrl = "", bars = mutableListOf())))
-            }
-
-            val bar = Bar(
-                name = model.ime,
-                address = model.adresa,
-                latitude = model.lat.toDouble(),
-                longitude = model.long.toDouble(),
-                phoneNumber = model.telefon,
-                mainPictureUrl = model.slika,
-                galleryPictureUrls = model.galerija,
-                barType = barType,
-                workTime = model.radno,
-                services = services
-            )
-            barRepository.save(bar)
-        }
-    }
 }
-
-data class ModelToAdd(
-    val adresa: String,
-    val galerija: ArrayList<String>,
-    val ime: String,
-    val lat: String,
-    val long: String,
-    val radno: ArrayList<String>,
-    val slika: String,
-    val telefon: String,
-    val usluge: ArrayList<String>,
-    val vrsta: String
-)
