@@ -7,6 +7,5 @@ kubectl create -f deployment.yaml
 kubectl expose deployment decemo-reservation --type=NodePort --name=decemo-reservation-service
 
 
-
 kubectl delete deployment decemo-reservation
 kubectl delete service decemo-reservation-service
